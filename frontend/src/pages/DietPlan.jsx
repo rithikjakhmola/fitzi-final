@@ -10,7 +10,7 @@ const DietPlan = ({ token, refreshTrigger }) => {
   const fetchPlan = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/api/generate-plan", {
+      const response = await fetch("https://fitzi-backend1.onrender.com/api/generate-plan", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

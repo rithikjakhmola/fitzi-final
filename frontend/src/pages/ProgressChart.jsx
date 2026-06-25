@@ -9,7 +9,7 @@ const ProgressChart = ({ token, refreshTrigger }) => {
     setLoading(true);
     try {
       // The backend extracts the user ID from the token automatically now
-      const response = await fetch(`http://localhost:3000/api/weekly-progress`, {
+      const response = await fetch(`https://fitzi-backend1.onrender.com/api/weekly-progress`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const chartData = await response.json();

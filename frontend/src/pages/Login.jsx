@@ -21,7 +21,7 @@ const Login = ({ onLoginSuccess }) => {
     const endpoint = isLogin ? "/api/login" : "/api/register";
     
     // Make sure your backend is running on port 3000
-    const url = `http://localhost:3000${endpoint}`; 
+    const url = `https://fitzi-backend1.onrender.com${endpoint}`; 
 
     try {
       const response = await fetch(url, {
