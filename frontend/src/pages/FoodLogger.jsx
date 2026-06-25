@@ -44,7 +44,7 @@ const FoodLogger = ({ token, onMealLogged }) => {
 
   const logMeal = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/log-meal', {
+      const response = await fetch('https://fitzi-backend1.onrender.com/api/log-meal', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
