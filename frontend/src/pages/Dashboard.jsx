@@ -66,7 +66,7 @@ const Dashboard = ({ user, token, onLogout }) => {
   const handleUpdateStats = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/api/update-profile", {
+      const response = await fetch("https://fitzi-backend1.onrender.com/api/update-profile", {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",
