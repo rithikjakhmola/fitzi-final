@@ -4,6 +4,19 @@ const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const express = require('express');
+const cors = require('cors'); // 1. Import CORS
+const app = express();
+
+// 2. Allow requests from your live frontend
+app.use(cors({
+    origin: 'https://fitzi-final.vercel.app', // Put your exact Vercel URL here
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
+
+app.use(express.json());
+// ... your routes below
 
 // Middleware
 app.use(cors());
