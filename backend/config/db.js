@@ -6,12 +6,13 @@ const db = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306, // CRITICAL: Aiven needs this port
+  port: process.env.DB_PORT || 3306,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  // CRITICAL: Aiven requires SSL, localhost does not
-  ssl: process.env.DB_HOST === 'localhost' ? false : { rejectUnauthorized: true } 
+  // 🚨 THE FIX: Change rejectUnauthorized to false
+  ssl:
+    process.env.DB_HOST === "localhost" ? false : { rejectUnauthorized: false },
 });
 
 // Test the connection immediately on boot
