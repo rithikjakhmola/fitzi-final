@@ -10,15 +10,29 @@ const generateToken = (user) => {
 exports.register = async (req, res) => {
   const { name, email, password, age, weight, height, gender } = req.body;
   try {
+    console.log(`➡️ Attempting to register user: ${email}`);
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const userId = await User.create({ name, email, password: hashedPassword, age, weight, height, gender });
     
     // Generate token upon successful registration
     const token = generateToken({ id: userId, email });
+    
+    console.log(`✅ Successfully registered user: ${email}`);
     res.status(201).json({ message: "User created successfully!", token, user: { id: userId, name, email } });
+    
   } catch (error) {
-    if (error.code === "ER_DUP_ENTRY") return res.status(400).json({ error: "Email already exists" });
-    res.status(500).json({ error: "Server error" });
+    // 🚨 THE SMOKING GUN LOG 🚨
+    console.error("\n🔥 REGISTRATION ERROR DETECTED:");
+    console.error(error);
+    console.error("--------------------------------\n");
+
+    if (error.code === "ER_DUP_ENTRY") {
+        return res.status(400).json({ error: "Email already exists" });
+    }
+    
+    // Sending error.message back to the frontend temporarily to help you debug
+    res.status(500).json({ error: "Server error", details: error.message });
   }
 };
 
@@ -34,12 +48,14 @@ exports.login = async (req, res) => {
     // Generate token upon successful login
     const token = generateToken(user);
     res.json({ message: "Login successful!", token, user: { id: user.id, name: user.name, email: user.email } });
+    
   } catch (error) {
+    console.error("🔥 LOGIN ERROR:", error);
     res.status(500).json({ error: "Server error" });
   }
 };
 
-// NEW: Endpoint logic to update age/weight/height
+// Endpoint logic to update age/weight/height
 exports.updateProfile = async (req, res) => {
   const userId = req.user.id; // Securely extracted from JWT
   const { age, weight, height } = req.body;
@@ -48,6 +64,7 @@ exports.updateProfile = async (req, res) => {
     await User.updateStats(userId, { age, weight, height });
     res.json({ message: "Stats updated! Recalculate your blueprint to see changes." });
   } catch (error) {
+    console.error("🔥 UPDATE PROFILE ERROR:", error);
     res.status(500).json({ error: "Failed to update profile stats" });
   }
 };
