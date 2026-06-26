@@ -29,7 +29,8 @@ const Dashboard = ({ user, token, onLogout }) => {
           setGoal(data.metrics.goal);
         }
       } catch (error) {
-        console.error("Failed to fetch metrics");
+        // 🚨 UPDATED CATCH BLOCK
+        console.error("NETWORK ERROR FETCHING METRICS:", error);
       }
     };
     fetchMetrics();
@@ -56,7 +57,9 @@ const Dashboard = ({ user, token, onLogout }) => {
         alert(data.error);
       }
     } catch (error) {
-      alert("Server Error");
+      // 🚨 UPDATED CATCH BLOCK
+      console.error("NETWORK ERROR CALCULATING GOALS:", error);
+      alert("Network connection failed. Check console for details.");
     } finally {
       setLoading(false);
     }
@@ -82,7 +85,9 @@ const Dashboard = ({ user, token, onLogout }) => {
         document.getElementById("calc-btn").click(); 
       }
     } catch (error) {
-      alert("Failed to update stats.");
+      // 🚨 UPDATED CATCH BLOCK
+      console.error("NETWORK ERROR UPDATING STATS:", error);
+      alert("Failed to update stats due to a network error.");
     }
   };
 

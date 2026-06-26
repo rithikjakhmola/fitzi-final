@@ -20,7 +20,6 @@ const Login = ({ onLoginSuccess }) => {
     setLoading(true);
     const endpoint = isLogin ? "/api/login" : "/api/register";
     
-    // Make sure your backend is running on port 3000
     const url = `https://fitzi-backend1.onrender.com${endpoint}`; 
 
     try {
@@ -33,13 +32,14 @@ const Login = ({ onLoginSuccess }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Pass the user and token up to App.jsx
         onLoginSuccess(data.user, data.token);
       } else {
         alert(data.error);
       }
     } catch (error) {
-      alert("Cannot connect to server. Is your backend running on port 3000?");
+      // 🚨 UPDATED CATCH BLOCK: Logs the actual error to the browser console
+      console.error("NETWORK/CORS ERROR DURING LOGIN:", error);
+      alert(`Network Error: Check the browser console (Right Click -> Inspect -> Console) for the exact reason.`);
     } finally {
       setLoading(false);
     }
